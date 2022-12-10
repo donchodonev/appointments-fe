@@ -45,12 +45,14 @@ function App() {
         .acquireTokenSilent(accessTokenRequest)
         .then((res) => {
           setAccessToken(res.accessToken);
+          setIsFlowUserCancelled(false);
         })
         .catch(() => {
           instance
             .acquireTokenPopup(accessTokenRequest)
             .then((res) => {
               setAccessToken(res.accessToken);
+              setIsFlowUserCancelled(false);
             })
             .catch((error) => {
               if (
