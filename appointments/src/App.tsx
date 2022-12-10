@@ -40,7 +40,6 @@ function App() {
 
   const ensureAccessTokenExists = (interactionStatus: InteractionStatus) => {
     if (interactionStatus === InteractionStatus.None && !isAuthenticated) {
-      console.log("inside unauth flow");
       instance.loginPopup().then((authResult) => {
         setAccessToken(authResult.accessToken);
       });
