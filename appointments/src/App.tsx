@@ -6,10 +6,7 @@ import "@fontsource/roboto/700.css";
 import Navigation from "./components/Navigation/Navigation";
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { useEffect, useState } from "react";
-import {
-  InteractionRequiredAuthError,
-  InteractionStatus,
-} from "@azure/msal-browser";
+import { BrowserAuthError, InteractionStatus } from "@azure/msal-browser";
 
 function App() {
   const Button: React.FC = () => (
@@ -19,6 +16,7 @@ function App() {
   const isAuthenticated = useIsAuthenticated();
   const { instance, inProgress: interactionStatus, accounts } = useMsal();
   const [accessToken, setAccessToken] = useState<string | undefined>();
+  const [isFlowIsUserCancelled, setIsFlowUserCancelled] = useState(false);
   const accessTokenRequest = {
     scopes: [`api://${process.env.REACT_APP_SERVER_ID}/access_as_user`],
     account: accounts[0],
@@ -39,23 +37,29 @@ function App() {
   };
 
   const ensureAccessTokenExists = (interactionStatus: InteractionStatus) => {
-    if (interactionStatus === InteractionStatus.None && !isAuthenticated) {
-      instance.loginPopup().then((authResult) => {
-        setAccessToken(authResult.accessToken);
-      });
-    } else if (
+    if (
       interactionStatus === InteractionStatus.None &&
-      isAuthenticated
+      !isFlowIsUserCancelled
     ) {
       instance
         .acquireTokenSilent(accessTokenRequest)
-        .then((res) => setAccessToken(res.accessToken))
-        .catch((error) => {
-          if (error instanceof InteractionRequiredAuthError) {
-            instance
-              .acquireTokenPopup(accessTokenRequest)
-              .then((res) => setAccessToken(res.accessToken));
-          }
+        .then((res) => {
+          setAccessToken(res.accessToken);
+        })
+        .catch(() => {
+          instance
+            .acquireTokenPopup(accessTokenRequest)
+            .then((res) => {
+              setAccessToken(res.accessToken);
+            })
+            .catch((error) => {
+              if (
+                error instanceof BrowserAuthError &&
+                error.errorMessage === "User cancelled the flow."
+              ) {
+                setIsFlowUserCancelled(true); //in case user wishes to close login for some reason pop-up
+              }
+            });
         });
     }
   };
