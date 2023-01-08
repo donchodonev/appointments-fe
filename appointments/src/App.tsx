@@ -4,23 +4,17 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import Navigation from "./components/Navigation/Navigation";
-import { useIsAuthenticated, useMsal } from "@azure/msal-react";
-import { useEffect, useState } from "react";
-import { BrowserAuthError, InteractionStatus } from "@azure/msal-browser";
+import useAuthentication from "./hooks/useAuthentication";
+import { useAppSelector } from "./hooks/useAppSelector";
 
 function App() {
   const Button: React.FC = () => (
     <button onClick={callApiAsync}>Call weather api</button>
   );
 
-  const isAuthenticated = useIsAuthenticated();
-  const { instance, inProgress: interactionStatus, accounts } = useMsal();
-  const [accessToken, setAccessToken] = useState<string | undefined>();
-  const [isFlowIsUserCancelled, setIsFlowUserCancelled] = useState(false);
-  const accessTokenRequest = {
-    scopes: [`api://${process.env.REACT_APP_SERVER_ID}/access_as_user`],
-    account: accounts[0],
-  };
+  useAuthentication();
+  const accessToken = useAppSelector((state) => state.auth.accessToken);
+  const isLoggedIn = accessToken;
 
   const callApiAsync = () => {
     var headers = new Headers();
@@ -31,51 +25,19 @@ function App() {
       method: "GET",
       headers: headers,
     };
-    var weatherEndpoint = "https://localhost:7067/WeatherForecast";
+    var weatherEndpoint = "https://localhost:7092/WeatherForecast";
 
-    fetch(weatherEndpoint, options).then(console.log).catch(console.log);
+    fetch(weatherEndpoint, options)
+      .then((res) => console.log(res.json()))
+      .catch(console.log);
   };
-
-  const ensureAccessTokenExists = (interactionStatus: InteractionStatus) => {
-    if (
-      interactionStatus === InteractionStatus.None &&
-      !isFlowIsUserCancelled
-    ) {
-      instance
-        .acquireTokenSilent(accessTokenRequest)
-        .then((res) => {
-          setAccessToken(res.accessToken);
-          setIsFlowUserCancelled(false);
-        })
-        .catch(() => {
-          instance
-            .acquireTokenPopup(accessTokenRequest)
-            .then((res) => {
-              setAccessToken(res.accessToken);
-              setIsFlowUserCancelled(false);
-            })
-            .catch((error) => {
-              if (
-                error instanceof BrowserAuthError &&
-                error.errorMessage === "User cancelled the flow."
-              ) {
-                setIsFlowUserCancelled(true); //in case user wishes to close login for some reason pop-up
-              }
-            });
-        });
-    }
-  };
-
-  useEffect(() => {
-    ensureAccessTokenExists(interactionStatus);
-  }, [interactionStatus]);
 
   return (
     <>
-      <Navigation pages={[]} settings={["Logout"]} />
+      <Navigation />
       <div className="App">
         <header className="App-header">
-          {isAuthenticated ? <Button /> : <p>User is not logged in</p>}
+          {isLoggedIn ? <Button /> : <p>User is not logged in</p>}
         </header>
       </div>
     </>

@@ -1,21 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { Configuration, PublicClientApplication } from '@azure/msal-browser';
-import { MsalProvider } from '@azure/msal-react';
-import { msalConfig } from './authConfig';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Configuration, PublicClientApplication } from "@azure/msal-browser";
+import { MsalProvider } from "@azure/msal-react";
+import { Provider } from "react-redux";
+import store from "./store";
+import { msalConfig } from "./authConfig";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-const publicClientApplication = new PublicClientApplication(msalConfig as Configuration);
+const publicClientApplication = new PublicClientApplication(
+  msalConfig as Configuration
+);
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <MsalProvider instance={publicClientApplication}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </MsalProvider>
   </React.StrictMode>
 );
