@@ -20,11 +20,21 @@ const useAuthentication = () => {
       instance
         .acquireTokenSilent(accessTokenRequest)
         .then((res) => {
-          dispatch(authActions.loginUser({ accessToken: res.accessToken }));
+          dispatch(
+            authActions.loginUser({
+              accessToken: res.accessToken,
+              username: res.account?.username,
+            })
+          );
         })
         .catch(() => {
           instance.acquireTokenPopup(accessTokenRequest).then((res) => {
-            dispatch(authActions.loginUser({ accessToken: res.accessToken }));
+            dispatch(
+              authActions.loginUser({
+                accessToken: res.accessToken,
+                username: res.account?.username,
+              })
+            );
           });
         });
     }
