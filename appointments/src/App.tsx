@@ -6,6 +6,7 @@ import "@fontsource/roboto/700.css";
 import Navigation from "./components/Navigation/Navigation";
 import useAuthentication from "./hooks/useAuthentication";
 import { useAppSelector } from "./hooks/useAppSelector";
+import { Routes } from "react-router";
 
 function App() {
   const Button: React.FC = () => (
@@ -43,5 +44,9 @@ function App() {
     </>
   );
 }
+
+const Pages = () => {
+  return <Routes></Routes>;
+};
 
 export default App;
