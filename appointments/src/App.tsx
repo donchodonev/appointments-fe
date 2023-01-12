@@ -9,35 +9,14 @@ import { Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 
-function App() {
-  // useAuthentication();
-  // const accessToken = useAppSelector((state) => state.auth.accessToken);
+const App: React.FC = () => (
+  <>
+    <Navigation />
+    <Pages />
+  </>
+);
 
-  // const callApiAsync = () => {
-  //   var headers = new Headers();
-  //   var bearer = "Bearer " + accessToken;
-
-  //   headers.append("Authorization", bearer);
-  //   var options = {
-  //     method: "GET",
-  //     headers: headers,
-  //   };
-  //   var weatherEndpoint = "https://localhost:7092/WeatherForecast";
-
-  //   fetch(weatherEndpoint, options)
-  //     .then((res) => console.log(res.json()))
-  //     .catch(console.log);
-  // };
-
-  return (
-    <>
-      <Navigation />
-      <Pages />
-    </>
-  );
-}
-
-const Pages = () => {
+const Pages: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
