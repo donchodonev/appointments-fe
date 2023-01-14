@@ -1,17 +1,10 @@
-import {
-  Container,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
+import { Container } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { CalendarPicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useState } from "react";
 import { isEqual } from "date-fns";
-import { generateKey } from "../utils/keyGenerator";
+import TimePicker from "../components/TimePicker/TimePicker";
 
 const Home: React.FC = () => {
   const [date, setDate] = useState(new Date());
@@ -61,21 +54,7 @@ const Home: React.FC = () => {
           </LocalizationProvider>
         </Grid>
         <Grid xs={6} style={{ backgroundColor: "white" }}>
-          <FormControl>
-            <FormLabel id="demo-row-radio-buttons-group-label">
-              Available hours
-            </FormLabel>
-            <RadioGroup row>
-              {availableTimes.map((time) => (
-                <FormControlLabel
-                  key={generateKey()}
-                  value={time.toTimeString()}
-                  control={<Radio />}
-                  label={time.toTimeString()}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
+          <TimePicker availableAppointments={availableTimes} />
         </Grid>
       </Grid>
     </Container>
