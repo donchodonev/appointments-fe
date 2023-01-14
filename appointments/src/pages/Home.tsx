@@ -1,16 +1,34 @@
-import { Container } from "@mui/material";
+import {
+  Container,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { CalendarPicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useState } from "react";
-import { isPast } from "date-fns";
+import { isEqual } from "date-fns";
 
 const Home: React.FC = () => {
   const [date, setDate] = useState(new Date());
-  const futureUnavailableDatesReturnedFromApi = [] as Number[];
+
+  const unavailableDatesReturnedFromApi = [
+    new Date(2023, 0, 17),
+    new Date(2023, 1, 2),
+  ] as Date[];
+
   const disableUnavailableDates = (date: Date): boolean =>
-    futureUnavailableDatesReturnedFromApi.includes(date.getDate()) ||
-    isPast(date);
+    unavailableDatesReturnedFromApi.some((unavailableDate) =>
+      isEqual(unavailableDate, date)
+    );
+
+  const [availableTimes, setAvailableTimes] = useState([
+    new Date(2023, 0, 18, 11),
+    new Date(2023, 0, 18, 12),
+  ]);
 
   return (
     <Container
@@ -22,17 +40,40 @@ const Home: React.FC = () => {
       }}
     >
       <Grid container>
-        <Grid xs={6} style={{ backgroundColor: "yellow" }}>
-          asdasd
-        </Grid>
         <Grid xs={6} style={{ backgroundColor: "white" }}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <CalendarPicker
               date={date}
-              onChange={(newDate) => setDate(newDate as Date)}
+              onChange={(newDate) => {
+                setDate(newDate as Date);
+                setAvailableTimes(
+                  availableTimes.map((time) => {
+                    time.setDate(newDate?.getDate() as number);
+                    time.setHours((time?.getHours() as number) + 1);
+                    return time;
+                  })
+                );
+              }}
               shouldDisableDate={disableUnavailableDates}
+              disablePast={true}
             />
           </LocalizationProvider>
+        </Grid>
+        <Grid xs={6} style={{ backgroundColor: "white" }}>
+          <FormControl>
+            <FormLabel id="demo-row-radio-buttons-group-label">
+              Available hours
+            </FormLabel>
+            <RadioGroup row>
+              {availableTimes.map((time) => (
+                <FormControlLabel
+                  value={time.toTimeString()}
+                  control={<Radio />}
+                  label={time.toTimeString()}
+                />
+              ))}
+            </RadioGroup>
+          </FormControl>
         </Grid>
       </Grid>
     </Container>
