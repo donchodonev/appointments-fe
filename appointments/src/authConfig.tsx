@@ -1,4 +1,8 @@
-import { Configuration, PopupRequest } from "@azure/msal-browser";
+import {
+  Configuration,
+  PublicClientApplication,
+  RedirectRequest,
+} from "@azure/msal-browser";
 
 export const msalConfig: Configuration = {
   auth: {
@@ -12,7 +16,7 @@ export const msalConfig: Configuration = {
   },
 };
 
-export const loginRequest: PopupRequest = {
+export const loginRequest: RedirectRequest = {
   scopes: ["User.Read"],
 };
 
@@ -20,3 +24,5 @@ export const loginRequest: PopupRequest = {
 export const graphConfig = {
   graphMeEndpoint: "https://localhost:7092",
 };
+
+export const msalInstance = new PublicClientApplication(msalConfig);

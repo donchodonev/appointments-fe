@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Configuration, PublicClientApplication } from "@azure/msal-browser";
+import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -10,9 +10,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
-const publicClientApplication = new PublicClientApplication(
-  msalConfig as Configuration
-);
+const publicClientApplication = new PublicClientApplication(msalConfig);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
