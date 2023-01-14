@@ -11,6 +11,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { CalendarPicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useState } from "react";
 import { isEqual } from "date-fns";
+import { generateKey } from "../utils/keyGenerator";
 
 const Home: React.FC = () => {
   const [date, setDate] = useState(new Date());
@@ -67,6 +68,7 @@ const Home: React.FC = () => {
             <RadioGroup row>
               {availableTimes.map((time) => (
                 <FormControlLabel
+                  key={generateKey()}
                   value={time.toTimeString()}
                   control={<Radio />}
                   label={time.toTimeString()}
