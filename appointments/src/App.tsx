@@ -8,6 +8,7 @@ import { Routes } from "react-router";
 import { Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Appointments from "./pages/Appointments";
 
 const App: React.FC = () => (
   <>
@@ -21,6 +22,7 @@ const Pages: React.FC = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/appointments" element={<Appointments />} />
     </Routes>
   );
 };

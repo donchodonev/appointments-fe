@@ -2,10 +2,21 @@ import { Container } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import TimePicker from "../../components/TimePicker/TimePicker";
 import DatePicker from "../../components/DatePicker/DatePicker";
+import useAxios from "../../hooks/useAxios";
+import { useState } from "react";
 
 const AppointmentPicker: React.FC = () => {
-  const unavailableDates = [] as Date[];
-  const availableTimes = [] as Date[];
+  const [unavailableDates, setUnavailableDates] = useState([] as Date[]);
+  const [availableTimes, setAvailableTimesDates] = useState([] as Date[]);
+
+  const axios = useAxios();
+
+  const getData = async () =>
+    await (
+      await axios.get("/WeatherForecast")
+    ).headers;
+
+  console.log(getData());
 
   return (
     <Container

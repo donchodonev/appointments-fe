@@ -1,9 +1,11 @@
+import { PropsWithChildren } from "react";
+import AppointmentPicker from "../components/AppointmentPicker/AppointmentPicker";
 import AuthWrapper from "../components/Auth/AuthWrapper";
 
-const Appointments: React.FC = () => {
+const Appointments: React.FC<PropsWithChildren> = () => {
   return (
     <AuthWrapper>
-      <p>Appointments</p>
+      <AppointmentPicker />
     </AuthWrapper>
   );
 };

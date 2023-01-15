@@ -6,7 +6,7 @@ import {
 
 export const msalConfig: Configuration = {
   auth: {
-    clientId: process.env.REACT_APP_CLIENT_ID as string,
+    clientId: process.env.REACT_APP_SERVER_ID as string,
     authority: `https://login.microsoftonline.com/${process.env.REACT_APP_TENANT_ID}`,
     redirectUri: "http://localhost:3000",
   },
