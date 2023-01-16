@@ -3,7 +3,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import TimePicker from "../../components/TimePicker/TimePicker";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import useAxios from "../../hooks/useAxios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AppointmentPicker: React.FC = () => {
   const [unavailableDates, setUnavailableDates] = useState([] as Date[]);
@@ -16,7 +16,9 @@ const AppointmentPicker: React.FC = () => {
       await axios.get("/WeatherForecast")
     ).headers;
 
-  console.log(getData());
+  useEffect(() => {
+    getData();
+  });
 
   return (
     <Container
