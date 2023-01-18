@@ -22,7 +22,7 @@ export const loginRequest: RedirectRequest = {
 
 // Add the endpoints here for Microsoft Graph API services you'd like to use.
 export const graphConfig = {
-  graphMeEndpoint: "https://localhost:7092",
+  graphMeEndpoint: process.env.REACT_APP_BASE_URL,
 };
 
 export const msalInstance = new PublicClientApplication(msalConfig);
