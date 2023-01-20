@@ -9,8 +9,8 @@ const Navigation: React.FC = () => {
   const firstName = accounts[0]?.name?.split(" ")[0];
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box>
+      <AppBar position="static" sx={{ boxShadow: "none" }}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {firstName ? `Hi, ${firstName}` : "Welcome"}
