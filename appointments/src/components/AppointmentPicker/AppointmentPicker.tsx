@@ -10,20 +10,7 @@ getWeather().then((res) => res);
 
 const AppointmentPicker: React.FC = () => {
   const [unavailableDates, setUnavailableDates] = useState([] as Date[]);
-  const [availableTimes, setAvailableTimesDates] = useState([
-    new Date(),
-    new Date(),
-    new Date(),
-    new Date(),
-    new Date(),
-    new Date(),
-    new Date(),
-    new Date(),
-    new Date(),
-    new Date(),
-    new Date(),
-    new Date(),
-  ]);
+  const [availableTimes, setAvailableTimesDates] = useState([1, 2, 3, 4, 5, 6, 7].map(x => new Date(1, 2, 3, x)));
 
   return (
     <Box display="flex" flexWrap="wrap">

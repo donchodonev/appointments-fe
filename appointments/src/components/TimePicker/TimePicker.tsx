@@ -11,38 +11,26 @@ import ITimePickerProps from "./ITimePickerProps";
 
 const TimePicker: React.FC<PropsWithChildren<ITimePickerProps>> = (props) => {
   const { availableAppointments } = props;
-  const [radioOptions, setRadioOptions] = useState(
-    availableAppointments.map((time, index) => (
-      <FormControlLabel
-        key={index}
-        value={time}
-        control={<Radio />}
-        label={format(time, "HH:mm")}
-        onChange={(e) => {
-          (e as React.ChangeEvent<HTMLInputElement>).target.checked = true;
-          setRadioOptions(
-            radioOptions.map((x) => {
-              if (x.props.checked === true) {
-                x.props.checked = true;
-                console.log(x.props);
-              }
-              return x;
-            })
-          );
-        }}
-      />
-    ))
-  );
+  const [value, setValue] = useState<string | null>(null);
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue((event.target as HTMLInputElement).value);
+  };
+  console.log(value);
   return (
     <FormControl>
       <RadioGroup
-        onChange={(e, v) => {
-          e.target.checked = true;
-        }}
+        onChange={handleChange}
       >
         <Box display="flex" justifyContent="center" flexWrap="wrap">
-          {radioOptions}
+          {availableAppointments.map((time, index) => (
+            <FormControlLabel
+              key={index}
+              value={format(time, "HH:mm")}
+              control={<Radio />}
+              label={format(time, "HH:mm")}
+            />
+          ))}
         </Box>
       </RadioGroup>
     </FormControl>

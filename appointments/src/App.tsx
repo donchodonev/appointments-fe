@@ -9,11 +9,15 @@ import { Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Appointments from "./pages/Appointments";
+import { BottomNavigation, Box, Typography } from "@mui/material";
 
 const App: React.FC = () => (
   <>
     <Navigation />
     <Pages />
+    <BottomNavigation sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} >
+      FOOTER
+    </BottomNavigation>
   </>
 );
 
