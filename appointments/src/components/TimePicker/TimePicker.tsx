@@ -6,17 +6,11 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { format } from "date-fns";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren } from "react";
 import ITimePickerProps from "./ITimePickerProps";
 
 const TimePicker: React.FC<PropsWithChildren<ITimePickerProps>> = (props) => {
-  const { availableAppointments } = props;
-  const [value, setValue] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
-  console.log(value);
+  const { availableAppointments, handleChange } = props;
   return (
     <FormControl>
       <RadioGroup

@@ -16,8 +16,14 @@ const getAxios = (): AxiosInstance => {
       await msalInstance.acquireTokenSilent(accessTokenRequest)
     ).accessToken;
 
+    console.log(accessTokenRequest);
+    console.log(accessTokenRequest.account.idTokenClaims?.roles);
+    (config.headers as AxiosHeaders).setContentType("application/json");
     (config.headers as AxiosHeaders).set("Authorization", `Bearer ${token}`);
-    (config.headers as AxiosHeaders).set("Content-Type", "application/json");
+    (config.headers as AxiosHeaders).set(
+      "X-Admin",
+      accessTokenRequest.account.idTokenClaims?.roles
+    );
 
     return config;
   };
