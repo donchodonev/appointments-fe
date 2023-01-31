@@ -8,7 +8,7 @@ const getAxios = (): AxiosInstance => {
 
   const augmentRequestHeaders = async (config: AxiosRequestConfig) => {
     const accessTokenRequest = {
-      scopes: [`api://${process.env.REACT_APP_SERVER_ID}/access_as_user`],
+      scopes: [process.env.REACT_APP_SCOPE as string],
       account: msalInstance.getAllAccounts()[0],
     };
 
@@ -16,8 +16,6 @@ const getAxios = (): AxiosInstance => {
       await msalInstance.acquireTokenSilent(accessTokenRequest)
     ).accessToken;
 
-    console.log(accessTokenRequest);
-    console.log(accessTokenRequest.account.idTokenClaims?.roles);
     (config.headers as AxiosHeaders).setContentType("application/json");
     (config.headers as AxiosHeaders).set("Authorization", `Bearer ${token}`);
     (config.headers as AxiosHeaders).set(
