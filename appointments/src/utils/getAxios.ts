@@ -1,5 +1,6 @@
+import { SilentRequest } from "@azure/msal-browser";
 import axios, { AxiosHeaders, AxiosInstance, AxiosRequestConfig } from "axios";
-import { msalInstance } from "../authConfig";
+import { msalConfig, msalInstance } from "../authConfig";
 
 const getAxios = (): AxiosInstance => {
   const axiosInstance = axios.create({
@@ -7,10 +8,14 @@ const getAxios = (): AxiosInstance => {
   });
 
   const augmentRequestHeaders = async (config: AxiosRequestConfig) => {
-    const accessTokenRequest = {
+    const accessTokenRequest: SilentRequest = {
       scopes: [process.env.REACT_APP_SCOPE as string],
       account: msalInstance.getAllAccounts()[0],
+      authority: msalConfig.auth.authority,
     };
+
+    console.log(accessTokenRequest);
+    console.log(msalInstance.getAllAccounts());
 
     const token = await (
       await msalInstance.acquireTokenSilent(accessTokenRequest)
@@ -18,10 +23,6 @@ const getAxios = (): AxiosInstance => {
 
     (config.headers as AxiosHeaders).setContentType("application/json");
     (config.headers as AxiosHeaders).set("Authorization", `Bearer ${token}`);
-    (config.headers as AxiosHeaders).set(
-      "X-Admin",
-      accessTokenRequest.account.idTokenClaims?.roles
-    );
 
     return config;
   };

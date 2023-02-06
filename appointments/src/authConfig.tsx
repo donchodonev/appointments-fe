@@ -4,10 +4,23 @@ import {
   RedirectRequest,
 } from "@azure/msal-browser";
 
+export const b2cPolicies = {
+  names: {
+    signUpSignIn: "B2C_1_Custom_Claims",
+  },
+  authorities: {
+    signUpSignIn: {
+      authority: "https://donchodonev92.b2clogin.com/donchodonev92.onmicrosoft.com/B2C_1_Custom_Claims",
+    }
+  },
+  authorityDomain: "donchodonev92.b2clogin.com"
+};
+
 export const msalConfig: Configuration = {
   auth: {
     clientId: process.env.REACT_APP_CLIENT_ID as string,
-    authority: `https://login.microsoftonline.com/${process.env.REACT_APP_TENANT_ID}`,
+    authority: b2cPolicies.authorities.signUpSignIn.authority,
+    knownAuthorities: [b2cPolicies.authorityDomain],
     redirectUri: "http://localhost:3000",
   },
   cache: {
@@ -17,10 +30,10 @@ export const msalConfig: Configuration = {
 };
 
 export const loginRequest: RedirectRequest = {
-  scopes: ["User.Read"],
+  authority: b2cPolicies.authorities.signUpSignIn.authority,
+  scopes: [process.env.REACT_APP_SCOPE as string],
 };
 
-// Add the endpoints here for Microsoft Graph API services you'd like to use.
 export const graphConfig = {
   graphMeEndpoint: process.env.REACT_APP_BASE_URL,
 };
