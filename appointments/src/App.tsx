@@ -7,7 +7,7 @@ import Navigation from "./components/Navigation/Navigation";
 import { Routes } from "react-router";
 import { Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Login from "./pages/Login/Login";
 import { BottomNavigation } from "@mui/material";
 import { useMsal } from "@azure/msal-react";
 import React from "react";

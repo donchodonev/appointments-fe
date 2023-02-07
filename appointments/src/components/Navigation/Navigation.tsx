@@ -17,9 +17,13 @@ const Navigation: React.FC<{ accounts: AccountInfo[] }> = (props) => {
             {firstName ? `Hi, ${firstName}` : "Welcome"}
           </Typography>
           {!isLoggedIn && (
-            <Button variant="outlined" color="inherit" href="/login">
-              Login
-            </Button>
+            <>
+              <Button variant="outlined" color="inherit" href="/login">
+                Login
+              </Button><Button variant="outlined" color="inherit" href="/provider-login">
+                Provider Login
+              </Button>
+            </>
           )}
         </Toolbar>
       </AppBar>
