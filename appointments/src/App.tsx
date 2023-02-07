@@ -8,37 +8,32 @@ import { Routes } from "react-router";
 import { Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Appointments from "./pages/Appointments";
 import { BottomNavigation } from "@mui/material";
 import { useMsal } from "@azure/msal-react";
+import React from "react";
+import Appointments from "./pages/Appointments";
 
 const App: React.FC = () => {
   const msal = useMsal();
-  const isLoggedIn = msal.accounts.length !== 0;
 
   return (
     <>
       <Navigation accounts={msal.accounts} />
-      <Pages isLoggedIn={isLoggedIn} />
+      <AppRoutes />
       <BottomNavigation sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} >
         FOOTER
       </BottomNavigation>
     </>
   );
 }
-const Pages: React.FC<{ isLoggedIn: boolean }> = (props) => {
-
-  return props.isLoggedIn
-    ?
+const AppRoutes: React.FC = () => {
+  return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/appointments" element={<Appointments />} />
-    </Routes>
-    :
-    <Routes>
-      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
     </Routes>
-};
+  )
+}
 
 export default App;
