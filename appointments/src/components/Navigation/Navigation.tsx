@@ -3,6 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import { Box, Toolbar, Typography } from "@mui/material";
 import { AccountInfo } from "@azure/msal-browser";
+import { Link } from "react-router-dom";
 
 const Navigation: React.FC<{ accounts: AccountInfo[] }> = (props) => {
   const { accounts } = props;
@@ -17,13 +18,9 @@ const Navigation: React.FC<{ accounts: AccountInfo[] }> = (props) => {
             {firstName ? `Hi, ${firstName}` : "Welcome"}
           </Typography>
           {!isLoggedIn && (
-            <>
-              <Button variant="outlined" color="inherit" href="/login">
-                Login
-              </Button><Button variant="outlined" color="inherit" href="/provider-login">
-                Provider Login
-              </Button>
-            </>
+            <Button variant="outlined" color="inherit">
+              <Link to="/login">Login</Link>
+            </Button>
           )}
         </Toolbar>
       </AppBar>

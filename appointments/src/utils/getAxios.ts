@@ -14,9 +14,6 @@ const getAxios = (): AxiosInstance => {
       authority: msalConfig.auth.authority,
     };
 
-    console.log(accessTokenRequest);
-    console.log(msalInstance.getAllAccounts());
-
     const token = await (
       await msalInstance.acquireTokenSilent(accessTokenRequest)
     ).accessToken;
