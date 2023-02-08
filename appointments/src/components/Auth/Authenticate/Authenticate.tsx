@@ -4,13 +4,16 @@ import {
 } from "@azure/msal-react";
 import { PropsWithChildren } from "react";
 import { Navigate } from "react-router-dom";
+import { AuthenticateProps } from "./AuthenticateProps";
 
-const Authenticate: React.FC<PropsWithChildren> = (props) => {
+const Authenticate: React.FC<PropsWithChildren<AuthenticateProps>> = (props) => {
+  const { redirectPath, children } = props;
+
   return (
     <>
-      <AuthenticatedTemplate>{props.children}</AuthenticatedTemplate>
+      <AuthenticatedTemplate>{children}</AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-        <Navigate to={"/login"} />
+        <Navigate to={redirectPath} />
       </UnauthenticatedTemplate>
     </>
   );

@@ -13,6 +13,7 @@ import { useMsal } from "@azure/msal-react";
 import React from "react";
 import Appointments from "./pages/Appointments/Appointments";
 import { getRole } from "./utils/userUtils";
+import Logout from "./pages/Logout";
 
 const App: React.FC = () => {
   const msal = useMsal();
@@ -38,6 +39,7 @@ const AppRoutes: React.FC<{ userRole: string }> = (props) => {
       <Route path="/" element={<Home />} />
       <Route path="/appointments" element={<Appointments userRole={userRole} />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/logout" element={<Logout />} />
     </Routes>
   );
 };

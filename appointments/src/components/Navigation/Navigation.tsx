@@ -25,7 +25,11 @@ const Navigation: React.FC<{ msalContext: IMsalContext }> = (props) => {
                 ? `Hi, ${firstName}`
                 : ""}
           </Typography>
-          {!isLoggedIn && (
+          {isLoggedIn ? (
+            <Button variant="outlined" color="inherit">
+              <Link to="/logout">Logout</Link>
+            </Button>
+          ) : (
             <Button variant="outlined" color="inherit">
               <Link to="/login">Sign-up / Sign-in</Link>
             </Button>
