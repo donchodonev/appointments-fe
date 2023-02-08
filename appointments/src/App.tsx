@@ -12,7 +12,7 @@ import { BottomNavigation } from "@mui/material";
 import { useMsal } from "@azure/msal-react";
 import React from "react";
 import Appointments from "./pages/Appointments/Appointments";
-import { getRole } from "./utils/getRole";
+import { getRole } from "./utils/userUtils";
 
 const App: React.FC = () => {
   const msal = useMsal();
@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Navigation accounts={msal.accounts} />
+      <Navigation msalContext={msal} />
       <AppRoutes userRole={userRole} />
       <BottomNavigation
         sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
