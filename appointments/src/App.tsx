@@ -11,15 +11,17 @@ import Login from "./pages/Login";
 import { BottomNavigation } from "@mui/material";
 import { useMsal } from "@azure/msal-react";
 import React from "react";
-import Appointments from "./pages/Appointments";
+import Appointments from "./pages/Appointments/Appointments";
+import { getRole } from "./utils/getRole";
 
 const App: React.FC = () => {
   const msal = useMsal();
-  console.log(msal.accounts);
+  const userRole = getRole(msal);
+
   return (
     <>
       <Navigation accounts={msal.accounts} />
-      <AppRoutes />
+      <AppRoutes userRole={userRole} />
       <BottomNavigation
         sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
       >
@@ -28,11 +30,13 @@ const App: React.FC = () => {
     </>
   );
 };
-const AppRoutes: React.FC = () => {
+const AppRoutes: React.FC<{ userRole: string }> = (props) => {
+  const { userRole } = props;
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/appointments" element={<Appointments />} />
+      <Route path="/appointments" element={<Appointments userRole={userRole} />} />
       <Route path="/login" element={<Login />} />
     </Routes>
   );

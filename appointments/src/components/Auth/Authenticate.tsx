@@ -5,7 +5,7 @@ import {
 import { PropsWithChildren } from "react";
 import { Navigate } from "react-router-dom";
 
-const AuthWrapper: React.FC<PropsWithChildren> = (props) => {
+const Authenticate: React.FC<PropsWithChildren> = (props) => {
   return (
     <>
       <AuthenticatedTemplate>{props.children}</AuthenticatedTemplate>
@@ -16,4 +16,4 @@ const AuthWrapper: React.FC<PropsWithChildren> = (props) => {
   );
 };
 
-export default AuthWrapper;
+export default Authenticate;
